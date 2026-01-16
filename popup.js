@@ -13,9 +13,10 @@ chrome.storage.sync.get(['settings'], (result) => {
     result.settings.shortcuts.forEach(shortcut => {
       const div = document.createElement('div');
       div.className = 'shortcut';
+      const description = shortcut.url || (shortcut.keyword === 'repos' ? 'GitHub Home' : 'Navigate');
       div.innerHTML = `
         <span class="shortcut-key">gh ${shortcut.keyword}</span>
-        <span class="shortcut-desc">${shortcut.url || 'Home'}</span>
+        <span class="shortcut-desc">${description}</span>
       `;
       container.appendChild(div);
     });

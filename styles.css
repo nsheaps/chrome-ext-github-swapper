@@ -13,6 +13,17 @@
   margin-left: 12px;
 }
 
+.github-swapper-filter-btn {
+  font-size: 12px;
+  padding: 4px 8px;
+}
+
+.github-swapper-view-btn {
+  font-size: 11px;
+  padding: 3px 8px;
+  text-decoration: none;
+}
+
 .github-swapper-user-filter button,
 .github-swapper-view-switch a {
   transition: all 0.2s ease;

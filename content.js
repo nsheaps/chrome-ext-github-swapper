@@ -41,7 +41,6 @@ const OBSERVER_TIMEOUT_MS = 10000;
       if (targetElement) {
         const filterContainer = document.createElement('div');
         filterContainer.className = 'github-swapper-user-filter';
-        filterContainer.style.cssText = 'display: inline-flex; gap: 8px; margin-left: 8px; align-items: center;';
 
         // Get current user
         const userLink = document.querySelector('meta[name="user-login"]');
@@ -57,9 +56,8 @@ const OBSERVER_TIMEOUT_MS = 10000;
           if (!btn.filter) return;
           
           const button = document.createElement('button');
-          button.className = 'btn btn-sm';
+          button.className = 'btn btn-sm github-swapper-filter-btn';
           button.textContent = btn.label;
-          button.style.cssText = 'font-size: 12px; padding: 4px 8px;';
           
           button.addEventListener('click', () => {
             const currentUrl = new URL(window.location.href);
@@ -97,7 +95,6 @@ const OBSERVER_TIMEOUT_MS = 10000;
       if (targetElement) {
         const switchContainer = document.createElement('div');
         switchContainer.className = 'github-swapper-view-switch';
-        switchContainer.style.cssText = 'display: inline-flex; gap: 6px; margin-left: 12px;';
 
         const currentUrl = window.location.href;
         const prMatch = currentUrl.match(/\/pull\/(\d+)/);
@@ -116,7 +113,7 @@ const OBSERVER_TIMEOUT_MS = 10000;
         } else if (isGitHubDev) {
           // Convert github.dev URL to github.com
           const url = new URL(window.location.href);
-          const githubUrl = `${url.protocol}//${url.hostname.replace('github.dev', 'github.com')}${url.pathname}${url.search}${url.hash}`;
+          const githubUrl = `${url.protocol}//${url.hostname.replace(/^(.+\.)?github\.dev$/, '$1github.com')}${url.pathname}${url.search}${url.hash}`;
           
           views = [
             { label: 'Editor', path: window.location.pathname },
@@ -126,9 +123,8 @@ const OBSERVER_TIMEOUT_MS = 10000;
 
         views.forEach(view => {
           const button = document.createElement('a');
-          button.className = 'btn btn-sm';
+          button.className = 'btn btn-sm github-swapper-view-btn';
           button.textContent = view.label;
-          button.style.cssText = 'font-size: 11px; padding: 3px 8px; text-decoration: none;';
           
           if (isPRPage) {
             const basePath = currentUrl.split('/pull/')[0];
