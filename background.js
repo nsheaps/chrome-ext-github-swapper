@@ -1,6 +1,9 @@
 // Background service worker for GitHub Swapper extension
 // Handles tab deduplication and omnibox functionality
 
+// Configuration constants
+const DEDUP_DELAY_MS = 500;
+
 // Default settings
 const DEFAULT_SETTINGS = {
   enableTabDedup: true,
@@ -84,12 +87,12 @@ async function deduplicateTabs() {
 
 // Run deduplication when tabs are created or updated
 chrome.tabs.onCreated.addListener(() => {
-  setTimeout(deduplicateTabs, 500);
+  setTimeout(deduplicateTabs, DEDUP_DELAY_MS);
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
   if (changeInfo.url) {
-    setTimeout(deduplicateTabs, 500);
+    setTimeout(deduplicateTabs, DEDUP_DELAY_MS);
   }
 });
 

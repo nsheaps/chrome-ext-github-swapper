@@ -1,4 +1,8 @@
 // Popup script
+
+// Constants
+const REPOS_KEYWORD = 'repos';
+
 document.getElementById('openOptions').addEventListener('click', (e) => {
   e.preventDefault();
   chrome.runtime.openOptionsPage();
@@ -13,7 +17,7 @@ chrome.storage.sync.get(['settings'], (result) => {
     result.settings.shortcuts.forEach(shortcut => {
       const div = document.createElement('div');
       div.className = 'shortcut';
-      const description = shortcut.url || (shortcut.keyword === 'repos' ? 'GitHub Home' : 'Navigate');
+      const description = shortcut.url || (shortcut.keyword === REPOS_KEYWORD ? 'GitHub Home' : 'Navigate');
       div.innerHTML = `
         <span class="shortcut-key">gh ${shortcut.keyword}</span>
         <span class="shortcut-desc">${description}</span>
