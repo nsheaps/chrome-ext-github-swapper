@@ -1,0 +1,45 @@
+name: CI / Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linting and formatting checks
+        id: check
+        run: npm run check
+        continue-on-error: true
+
+      - name: Auto-fix issues (if enabled)
+        if: failure() && steps.check.outcome == 'failure' && (vars.AUTO_FIX_ENABLED == 'true' || github.event_name == 'pull_request')
+        run: |
+          npm run format
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "style: auto-fix linting and formatting issues"
+            git push
+          fi
+
+      - name: Fail if check failed and no auto-fix
+        if: steps.check.outcome == 'failure'
+        run: exit 1

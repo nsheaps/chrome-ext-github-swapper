@@ -3,24 +3,14 @@
   "name": "GitHub Swapper",
   "version": "1.0.0",
   "description": "Enhance GitHub navigation with configurable shortcuts, user filters, view switching, and tab deduplication",
-  "permissions": [
-    "tabs",
-    "storage",
-    "scripting"
-  ],
-  "host_permissions": [
-    "https://github.com/*",
-    "https://github.dev/*"
-  ],
+  "permissions": ["tabs", "storage", "scripting"],
+  "host_permissions": ["https://github.com/*", "https://github.dev/*"],
   "background": {
     "service_worker": "background.js"
   },
   "content_scripts": [
     {
-      "matches": [
-        "https://github.com/*",
-        "https://github.dev/*"
-      ],
+      "matches": ["https://github.com/*", "https://github.dev/*"],
       "js": ["content.js"],
       "css": ["styles.css"],
       "run_at": "document_end"

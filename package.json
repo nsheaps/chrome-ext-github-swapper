@@ -1,0 +1,32 @@
+{
+  "name": "github-swapper",
+  "version": "1.0.0",
+  "description": "Chrome extension for GitHub navigation with configurable shortcuts and tab management",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "run-s check:*",
+    "check:prettier": "prettier --check .",
+    "check:eslint": "eslint .",
+    "format": "run-s format:*",
+    "format:prettier": "prettier --write .",
+    "format:eslint": "eslint --fix .",
+    "test": "echo 'No tests configured yet' && exit 0",
+    "build": "node scripts/build.js",
+    "package": "node scripts/package.js",
+    "release": "node scripts/release.js",
+    "validate": "run-s check test build"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "archiver": "^7.0.1",
+    "eslint": "^9.15.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.12.0",
+    "npm-run-all2": "^7.0.1",
+    "prettier": "^3.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

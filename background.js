@@ -15,8 +15,8 @@ const DEFAULT_SETTINGS = {
   shortcuts: [
     { keyword: 'issues', url: '/issues' },
     { keyword: 'prs', url: '/pulls' },
-    { keyword: 'repos', url: '' }
-  ]
+    { keyword: 'repos', url: '' },
+  ],
 };
 
 // Initialize settings on install
@@ -36,7 +36,7 @@ async function deduplicateTabs() {
   const tabs = await chrome.tabs.query({});
   const tabGroups = new Map();
 
-  tabs.forEach(tab => {
+  tabs.forEach((tab) => {
     if (!tab.url) return;
 
     const url = new URL(tab.url);
@@ -44,16 +44,20 @@ async function deduplicateTabs() {
 
     // Only process GitHub and github.dev URLs - strict domain validation
     // Matches: github.com, *.github.com, github.dev, *.github.dev
-    const isGitHubCom = host === 'github.com' || (host.endsWith(GITHUB_COM_SUFFIX) && !host.slice(0, -GITHUB_COM_SUFFIX.length).includes('.'));
-    const isGitHubDev = host === 'github.dev' || (host.endsWith(GITHUB_DEV_SUFFIX) && !host.slice(0, -GITHUB_DEV_SUFFIX.length).includes('.'));
-    
+    const isGitHubCom =
+      host === 'github.com' ||
+      (host.endsWith(GITHUB_COM_SUFFIX) && !host.slice(0, -GITHUB_COM_SUFFIX.length).includes('.'));
+    const isGitHubDev =
+      host === 'github.dev' ||
+      (host.endsWith(GITHUB_DEV_SUFFIX) && !host.slice(0, -GITHUB_DEV_SUFFIX.length).includes('.'));
+
     if (!isGitHubCom && !isGitHubDev) return;
 
     let key;
 
     if (isGitHubDev) {
       // For github.dev: merge by branch/PR, ignore paths
-      const pathParts = url.pathname.split('/').filter(p => p);
+      const pathParts = url.pathname.split('/').filter((p) => p);
       if (pathParts.length >= 3) {
         // Format: /owner/repo/tree/branch or /owner/repo/pull/123
         const owner = pathParts[0];
@@ -81,9 +85,9 @@ async function deduplicateTabs() {
   });
 
   // Close duplicate tabs (keep the first one)
-  for (const [key, groupTabs] of tabGroups) {
+  for (const groupTabs of tabGroups.values()) {
     if (groupTabs.length > 1) {
-      const tabsToClose = groupTabs.slice(1).map(t => t.id);
+      const tabsToClose = groupTabs.slice(1).map((t) => t.id);
       if (tabsToClose.length > 0) {
         await chrome.tabs.remove(tabsToClose);
       }
@@ -109,10 +113,10 @@ chrome.omnibox.onInputChanged.addListener(async (text, suggest) => {
 
   const shortcuts = settings.settings?.shortcuts || DEFAULT_SETTINGS.shortcuts;
   const suggestions = shortcuts
-    .filter(s => s.keyword.includes(text.toLowerCase()))
-    .map(s => ({
+    .filter((s) => s.keyword.includes(text.toLowerCase()))
+    .map((s) => ({
       content: s.url,
-      description: `Navigate to ${s.keyword}: ${s.url}`
+      description: `Navigate to ${s.keyword}: ${s.url}`,
     }));
 
   suggest(suggestions);
@@ -124,8 +128,8 @@ chrome.omnibox.onInputEntered.addListener(async (text) => {
 
   let url = text;
   const textLower = text.toLowerCase();
-  const shortcut = shortcuts.find(s => s.keyword === textLower);
-  
+  const shortcut = shortcuts.find((s) => s.keyword === textLower);
+
   if (shortcut) {
     url = shortcut.url;
   }

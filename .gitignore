@@ -140,3 +140,15 @@ vite.config.ts.timestamp-*
 
 # Extension build scripts
 icons/create_icons.sh
+
+# Build artifacts
+dist/
+build/
+*.zip
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# mise
+.mise.local.toml
