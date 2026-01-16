@@ -38,14 +38,17 @@ async function deduplicateTabs() {
     if (!tab.url) return;
 
     const url = new URL(tab.url);
-    const host = url.host;
+    const host = url.hostname;
 
-    // Only process GitHub and github.dev URLs
-    if (!host.includes('github.com') && !host.includes('github.dev')) return;
+    // Only process GitHub and github.dev URLs - strict domain validation
+    const isGitHubCom = host === 'github.com' || host.endsWith('.github.com');
+    const isGitHubDev = host === 'github.dev' || host.endsWith('.github.dev');
+    
+    if (!isGitHubCom && !isGitHubDev) return;
 
     let key;
 
-    if (host.includes('github.dev')) {
+    if (isGitHubDev) {
       // For github.dev: merge by branch/PR, ignore paths
       const pathParts = url.pathname.split('/').filter(p => p);
       if (pathParts.length >= 3) {
@@ -56,7 +59,7 @@ async function deduplicateTabs() {
         const identifier = pathParts[3]; // branch name or PR number
         key = `${host}:${owner}/${repo}:${type}:${identifier}`;
       }
-    } else if (host.includes('github.com')) {
+    } else if (isGitHubCom) {
       // For GitHub PRs: merge by PR# & host
       const prMatch = url.pathname.match(/\/([^/]+\/[^/]+)\/pull\/(\d+)/);
       if (prMatch) {
