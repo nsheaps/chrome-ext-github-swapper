@@ -64,7 +64,10 @@ const OBSERVER_TIMEOUT_MS = 10000;
             const searchParams = new URLSearchParams(currentUrl.search);
             
             const currentQ = searchParams.get('q') || '';
-            const filters = currentQ.split(' ').filter(f => !f.startsWith('author:') && !f.startsWith('assignee:') && !f.startsWith('mentions:'));
+            const filterPrefixes = ['author:', 'assignee:', 'mentions:'];
+            const filters = currentQ.split(' ').filter(f => 
+              !filterPrefixes.some(prefix => f.startsWith(prefix))
+            );
             filters.push(btn.filter);
             
             searchParams.set('q', filters.join(' '));

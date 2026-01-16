@@ -3,6 +3,8 @@
 
 // Configuration constants
 const DEDUP_DELAY_MS = 500;
+const GITHUB_COM_SUFFIX = '.github.com';
+const GITHUB_DEV_SUFFIX = '.github.dev';
 
 // Default settings
 const DEFAULT_SETTINGS = {
@@ -42,8 +44,8 @@ async function deduplicateTabs() {
 
     // Only process GitHub and github.dev URLs - strict domain validation
     // Matches: github.com, *.github.com, github.dev, *.github.dev
-    const isGitHubCom = host === 'github.com' || (host.endsWith('.github.com') && !host.slice(0, -11).includes('.'));
-    const isGitHubDev = host === 'github.dev' || (host.endsWith('.github.dev') && !host.slice(0, -11).includes('.'));
+    const isGitHubCom = host === 'github.com' || (host.endsWith(GITHUB_COM_SUFFIX) && !host.slice(0, -GITHUB_COM_SUFFIX.length).includes('.'));
+    const isGitHubDev = host === 'github.dev' || (host.endsWith(GITHUB_DEV_SUFFIX) && !host.slice(0, -GITHUB_DEV_SUFFIX.length).includes('.'));
     
     if (!isGitHubCom && !isGitHubDev) return;
 
@@ -121,7 +123,8 @@ chrome.omnibox.onInputEntered.addListener(async (text) => {
   const shortcuts = settings.settings?.shortcuts || DEFAULT_SETTINGS.shortcuts;
 
   let url = text;
-  const shortcut = shortcuts.find(s => s.keyword === text.toLowerCase());
+  const textLower = text.toLowerCase();
+  const shortcut = shortcuts.find(s => s.keyword === textLower);
   
   if (shortcut) {
     url = shortcut.url;

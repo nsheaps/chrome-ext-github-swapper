@@ -75,6 +75,7 @@ function removeShortcut(index) {
   chrome.storage.sync.get(['settings'], (result) => {
     const settings = result.settings || DEFAULT_SETTINGS;
     settings.shortcuts.splice(index, 1);
+    // Re-render to ensure indices are correct
     renderShortcuts(settings.shortcuts);
   });
 }
