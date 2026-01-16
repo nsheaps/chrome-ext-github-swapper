@@ -34,11 +34,29 @@ function renderShortcuts(shortcuts) {
   shortcuts.forEach((shortcut, index) => {
     const item = document.createElement('div');
     item.className = 'shortcut-item';
-    item.innerHTML = `
-      <input type="text" value="${shortcut.keyword}" placeholder="Keyword" data-index="${index}" data-field="keyword">
-      <input type="text" value="${shortcut.url}" placeholder="GitHub path (e.g., /issues)" data-index="${index}" data-field="url">
-      <button class="btn remove-shortcut-btn" data-index="${index}">Remove</button>
-    `;
+    
+    const keywordInput = document.createElement('input');
+    keywordInput.type = 'text';
+    keywordInput.value = shortcut.keyword;
+    keywordInput.placeholder = 'Keyword';
+    keywordInput.dataset.index = index;
+    keywordInput.dataset.field = 'keyword';
+    
+    const urlInput = document.createElement('input');
+    urlInput.type = 'text';
+    urlInput.value = shortcut.url;
+    urlInput.placeholder = 'GitHub path (e.g., /issues)';
+    urlInput.dataset.index = index;
+    urlInput.dataset.field = 'url';
+    
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'btn remove-shortcut-btn';
+    removeBtn.textContent = 'Remove';
+    removeBtn.dataset.index = index;
+    
+    item.appendChild(keywordInput);
+    item.appendChild(urlInput);
+    item.appendChild(removeBtn);
     container.appendChild(item);
   });
 }

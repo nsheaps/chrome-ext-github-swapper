@@ -41,8 +41,9 @@ async function deduplicateTabs() {
     const host = url.hostname;
 
     // Only process GitHub and github.dev URLs - strict domain validation
-    const isGitHubCom = host === 'github.com' || host.endsWith('.github.com');
-    const isGitHubDev = host === 'github.dev' || host.endsWith('.github.dev');
+    // Matches: github.com, *.github.com, github.dev, *.github.dev
+    const isGitHubCom = host === 'github.com' || (host.endsWith('.github.com') && !host.slice(0, -11).includes('.'));
+    const isGitHubDev = host === 'github.dev' || (host.endsWith('.github.dev') && !host.slice(0, -11).includes('.'));
     
     if (!isGitHubCom && !isGitHubDev) return;
 

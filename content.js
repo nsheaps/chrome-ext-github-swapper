@@ -113,7 +113,16 @@ const OBSERVER_TIMEOUT_MS = 10000;
         } else if (isGitHubDev) {
           // Convert github.dev URL to github.com
           const url = new URL(window.location.href);
-          const githubUrl = `${url.protocol}//${url.hostname.replace(/^(.+\.)?github\.dev$/, '$1github.com')}${url.pathname}${url.search}${url.hash}`;
+          let githubHost = url.hostname;
+          
+          // Handle both github.dev and subdomains like vscode.github.dev
+          if (githubHost === 'github.dev') {
+            githubHost = 'github.com';
+          } else if (githubHost.endsWith('.github.dev')) {
+            githubHost = githubHost.slice(0, -11) + '.github.com';
+          }
+          
+          const githubUrl = `${url.protocol}//${githubHost}${url.pathname}${url.search}${url.hash}`;
           
           views = [
             { label: 'Editor', path: window.location.pathname },
