@@ -77,7 +77,10 @@ async function deduplicateTabs() {
       const tabsToClose = groupTabs.slice(1).map(t => t.id);
       if (tabsToClose.length > 0) {
         await chrome.tabs.remove(tabsToClose);
-        console.log(`Closed ${tabsToClose.length} duplicate tabs for ${key}`);
+        // Log only in development mode
+        if (chrome.runtime.getManifest().version_name?.includes('dev')) {
+          console.log(`Closed ${tabsToClose.length} duplicate tabs for ${key}`);
+        }
       }
     }
   }

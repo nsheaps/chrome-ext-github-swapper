@@ -37,7 +37,7 @@ function renderShortcuts(shortcuts) {
     item.innerHTML = `
       <input type="text" value="${shortcut.keyword}" placeholder="Keyword" data-index="${index}" data-field="keyword">
       <input type="text" value="${shortcut.url}" placeholder="GitHub path (e.g., /issues)" data-index="${index}" data-field="url">
-      <button class="btn" onclick="removeShortcut(${index})">Remove</button>
+      <button class="btn remove-shortcut-btn" data-index="${index}">Remove</button>
     `;
     container.appendChild(item);
   });
@@ -52,14 +52,22 @@ document.getElementById('addShortcut').addEventListener('click', () => {
   });
 });
 
-// Remove shortcut
-window.removeShortcut = function(index) {
+// Remove shortcut using event delegation
+function removeShortcut(index) {
   chrome.storage.sync.get(['settings'], (result) => {
     const settings = result.settings || DEFAULT_SETTINGS;
     settings.shortcuts.splice(index, 1);
     renderShortcuts(settings.shortcuts);
   });
-};
+}
+
+// Handle remove button clicks via event delegation
+document.getElementById('shortcuts-container').addEventListener('click', (e) => {
+  if (e.target.classList.contains('remove-shortcut-btn')) {
+    const index = parseInt(e.target.dataset.index, 10);
+    removeShortcut(index);
+  }
+});
 
 // Save settings
 document.getElementById('saveSettings').addEventListener('click', () => {

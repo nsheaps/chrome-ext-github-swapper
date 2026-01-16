@@ -1,6 +1,9 @@
 // Content script for GitHub page enhancements
 // Adds user filter buttons and view-switching buttons
 
+// Configuration constants
+const OBSERVER_TIMEOUT_MS = 10000;
+
 (async function() {
   const settings = await chrome.storage.sync.get(['settings']);
   const config = settings.settings || {};
@@ -79,7 +82,7 @@
     });
 
     observer.observe(document.body, { childList: true, subtree: true });
-    setTimeout(() => observer.disconnect(), 10000);
+    setTimeout(() => observer.disconnect(), OBSERVER_TIMEOUT_MS);
   }
 
   function addViewSwitchingButtons() {
@@ -111,9 +114,13 @@
             { label: 'Checks', path: `/pull/${prNum}/checks` }
           ];
         } else if (isGitHubDev) {
+          // Convert github.dev URL to github.com
+          const url = new URL(window.location.href);
+          const githubUrl = `${url.protocol}//${url.hostname.replace('github.dev', 'github.com')}${url.pathname}${url.search}${url.hash}`;
+          
           views = [
             { label: 'Editor', path: window.location.pathname },
-            { label: 'GitHub', path: window.location.pathname.replace('github.dev', 'github.com') }
+            { label: 'GitHub', path: githubUrl }
           ];
         }
 
@@ -145,6 +152,6 @@
     });
 
     observer.observe(document.body, { childList: true, subtree: true });
-    setTimeout(() => observer.disconnect(), 10000);
+    setTimeout(() => observer.disconnect(), OBSERVER_TIMEOUT_MS);
   }
 })();
