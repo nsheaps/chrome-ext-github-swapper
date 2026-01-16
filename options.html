@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>GitHub Swapper Settings</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        background: #f6f8fa;
+      }
+      .container {
+        background: white;
+        border-radius: 6px;
+        padding: 24px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        margin: 0 0 24px 0;
+        font-size: 24px;
+        font-weight: 600;
+        border-bottom: 1px solid #e1e4e8;
+        padding-bottom: 12px;
+      }
+      h2 {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 24px 0 12px 0;
+      }
+      .setting-group {
+        margin-bottom: 24px;
+      }
+      .setting {
+        display: flex;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #e1e4e8;
+      }
+      .setting:last-child {
+        border-bottom: none;
+      }
+      .setting label {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .setting-title {
+        font-weight: 500;
+        font-size: 14px;
+      }
+      .setting-desc {
+        font-size: 12px;
+        color: #57606a;
+      }
+      input[type='checkbox'] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
+      .shortcuts-list {
+        margin-top: 12px;
+      }
+      .shortcut-item {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 12px;
+        align-items: center;
+      }
+      .shortcut-item input {
+        padding: 8px;
+        border: 1px solid #d0d7de;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .shortcut-item input:first-child {
+        flex: 0 0 120px;
+      }
+      .shortcut-item input:last-child {
+        flex: 1;
+      }
+      .btn {
+        padding: 8px 16px;
+        border: 1px solid #d0d7de;
+        border-radius: 6px;
+        background: #f6f8fa;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .btn:hover {
+        background: #e1e4e8;
+      }
+      .btn-primary {
+        background: #2da44e;
+        color: white;
+        border-color: #2da44e;
+      }
+      .btn-primary:hover {
+        background: #2c974b;
+      }
+      .actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+        padding-top: 24px;
+        border-top: 1px solid #e1e4e8;
+      }
+      .message {
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 16px;
+        display: none;
+      }
+      .message.success {
+        background: #dafbe1;
+        color: #1a7f37;
+        border: 1px solid #2da44e;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>GitHub Swapper Settings</h1>
+
+      <div id="message" class="message"></div>
+
+      <div class="setting-group">
+        <h2>Features</h2>
+
+        <div class="setting">
+          <label for="enableTabDedup">
+            <span class="setting-title">Tab Deduplication</span>
+            <span class="setting-desc">Automatically merge duplicate PR and github.dev tabs</span>
+          </label>
+          <input type="checkbox" id="enableTabDedup" checked />
+        </div>
+
+        <div class="setting">
+          <label for="enableOmnibox">
+            <span class="setting-title">Omnibox Shortcuts</span>
+            <span class="setting-desc">Use "gh" keyword in address bar for quick navigation</span>
+          </label>
+          <input type="checkbox" id="enableOmnibox" checked />
+        </div>
+
+        <div class="setting">
+          <label for="enableUserFilters">
+            <span class="setting-title">User Filter Buttons</span>
+            <span class="setting-desc">Add quick filter buttons on issues and PR pages</span>
+          </label>
+          <input type="checkbox" id="enableUserFilters" checked />
+        </div>
+
+        <div class="setting">
+          <label for="enableViewSwitching">
+            <span class="setting-title">View Switching Buttons</span>
+            <span class="setting-desc">Add navigation buttons on PR and github.dev pages</span>
+          </label>
+          <input type="checkbox" id="enableViewSwitching" checked />
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <h2>Omnibox Shortcuts</h2>
+        <p class="setting-desc" style="margin-bottom: 12px">
+          Type "gh" in the address bar followed by a keyword to quickly navigate.
+        </p>
+
+        <div id="shortcuts-container" class="shortcuts-list">
+          <!-- Shortcuts will be loaded here -->
+        </div>
+
+        <button class="btn" id="addShortcut">Add Shortcut</button>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="saveSettings">Save Settings</button>
+        <button class="btn" id="resetSettings">Reset to Defaults</button>
+      </div>
+    </div>
+
+    <script src="options.js"></script>
+  </body>
+</html>

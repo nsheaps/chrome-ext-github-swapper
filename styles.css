@@ -1,0 +1,41 @@
+/* Styles for GitHub Swapper extension */
+
+.github-swapper-user-filter {
+  display: inline-flex;
+  gap: 8px;
+  margin-left: 8px;
+  align-items: center;
+}
+
+.github-swapper-view-switch {
+  display: inline-flex;
+  gap: 6px;
+  margin-left: 12px;
+}
+
+.github-swapper-filter-btn {
+  font-size: 12px;
+  padding: 4px 8px;
+}
+
+.github-swapper-view-btn {
+  font-size: 11px;
+  padding: 3px 8px;
+  text-decoration: none;
+}
+
+.github-swapper-user-filter button,
+.github-swapper-view-switch a {
+  transition: all 0.2s ease;
+}
+
+.github-swapper-user-filter button:hover,
+.github-swapper-view-switch a:hover {
+  opacity: 0.8;
+  transform: translateY(-1px);
+}
+
+.github-swapper-user-filter button:active,
+.github-swapper-view-switch a:active {
+  transform: translateY(0);
+}

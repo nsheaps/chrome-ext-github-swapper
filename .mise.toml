@@ -1,0 +1,26 @@
+[tools]
+node = "22"
+
+[tasks.check]
+description = "Run linting and formatting checks"
+run = "npm run check"
+
+[tasks.format]
+description = "Auto-fix linting and formatting issues"
+run = "npm run format"
+
+[tasks.test]
+description = "Run tests"
+run = "npm test"
+
+[tasks.build]
+description = "Build the extension"
+run = "npm run build"
+
+[tasks.package]
+description = "Package extension for Chrome Web Store"
+run = "npm run package"
+
+[tasks.validate]
+description = "Run check, test, and build"
+run = "npm run validate"

@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>GitHub Swapper</title>
+    <style>
+      body {
+        width: 300px;
+        padding: 16px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+        font-size: 14px;
+      }
+      h2 {
+        margin: 0 0 12px 0;
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .shortcut {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #e1e4e8;
+      }
+      .shortcut:last-child {
+        border-bottom: none;
+      }
+      .shortcut-key {
+        font-weight: 600;
+        color: #0969da;
+      }
+      .shortcut-desc {
+        color: #57606a;
+        font-size: 12px;
+      }
+      .footer {
+        margin-top: 16px;
+        padding-top: 12px;
+        border-top: 1px solid #e1e4e8;
+      }
+      .footer a {
+        color: #0969da;
+        text-decoration: none;
+        font-size: 12px;
+      }
+      .footer a:hover {
+        text-decoration: underline;
+      }
+      .status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+        padding: 8px;
+        background: #ddf4ff;
+        border-radius: 6px;
+        font-size: 12px;
+      }
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        background: #0969da;
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>GitHub Swapper</h2>
+
+    <div class="status">
+      <div class="status-dot"></div>
+      <span>Extension Active</span>
+    </div>
+
+    <div id="shortcuts">
+      <!-- Shortcuts will be loaded dynamically -->
+    </div>
+
+    <div class="footer">
+      <a href="#" id="openOptions">Settings & Options</a>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
